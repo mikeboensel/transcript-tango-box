@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import PlaceCall from '../components/PlaceCall';
 import PhoneInput from '../components/PhoneInput';
 import TranscriptList from '../components/TranscriptList';
 import { Transcript } from '../components/TranscriptItem';
@@ -90,6 +91,8 @@ const Index: React.FC = () => {
             Click on a transcript to expand and view the full content.
           </p>
         </div>
+        
+        <PlaceCall />
         
         <PhoneInput onSubmit={handleSubmit} />
         
