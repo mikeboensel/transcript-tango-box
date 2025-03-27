@@ -26,9 +26,9 @@ const TranscriptList: React.FC<TranscriptListProps> = ({ transcripts, isLoading 
   if (transcripts.length === 0) {
     return (
       <div className="w-full max-w-md mx-auto mt-6 text-center py-8 rounded-lg glass animate-fade-in">
-        <div className="text-app-medium-gray">No transcripts found</div>
+        <div className="text-app-medium-gray">No matching transcripts found</div>
         <div className="text-sm mt-2 text-app-medium-gray/70">
-          Enter a phone number to search for transcripts
+          Try a different phone number or clear the filter to see all transcripts
         </div>
       </div>
     );

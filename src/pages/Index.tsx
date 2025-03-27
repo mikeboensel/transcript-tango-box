@@ -30,11 +30,27 @@ const mockTranscripts: Transcript[] = [
     phoneNumber: '(415) 555-1234',
     summary: 'Detailed discussion about product features, user feedback, and next iteration priorities.',
     content: 'Person 1: Let\'s review the user feedback from the beta test.\nPerson 2: The main issues were around the navigation and search functionality.\nPerson 1: I agree. We should prioritize fixing those in the next sprint.\nPerson 2: What about the new feature requests?\nPerson 1: Let\'s put those in the backlog for now and focus on stability first.\nPerson 2: Makes sense. I\'ll update the sprint planning document.\nPerson 1: Thanks. Let\'s also schedule a design review for next week.'
+  },
+  {
+    id: '4',
+    date: 'Jul 20, 2023',
+    duration: '3:45',
+    phoneNumber: '(650) 123-4567',
+    summary: 'Discussion about the marketing strategy for Q4.',
+    content: 'Person 1: We need to finalize our marketing strategy for Q4.\nPerson 2: I was thinking we should focus on social media campaigns.\nPerson 1: That makes sense. What platforms do you recommend?\nPerson 2: Mainly Instagram and TikTok given our target demographic.\nPerson 1: Good point. Let\'s get a proposal together by next week.'
+  },
+  {
+    id: '5',
+    date: 'Jul 18, 2023',
+    duration: '6:22',
+    phoneNumber: '(510) 987-6543',
+    summary: 'Review of the latest user testing results and accessibility improvements.',
+    content: 'Person 1: How did the latest round of user testing go?\nPerson 2: We identified several accessibility issues that need to be addressed.\nPerson 1: What were the main concerns?\nPerson 2: Screen reader compatibility and keyboard navigation.\nPerson 1: Let\'s make those a priority for the next sprint.\nPerson 2: Agreed. I\'ll update the backlog accordingly.'
   }
 ];
 
 const Index: React.FC = () => {
-  const [transcripts, setTranscripts] = useState<Transcript[]>([]);
+  const [filteredTranscripts, setFilteredTranscripts] = useState<Transcript[]>(mockTranscripts);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (phoneNumber: string) => {
@@ -42,16 +58,26 @@ const Index: React.FC = () => {
     
     // Simulate API call with timeout
     setTimeout(() => {
-      // If the phone number contains "555", show the mock data
-      if (phoneNumber.includes('555')) {
-        setTranscripts(mockTranscripts);
-        toast.success(`Found ${mockTranscripts.length} transcripts`);
+      if (phoneNumber.trim() === '') {
+        // If no phone number is provided, show all transcripts
+        setFilteredTranscripts(mockTranscripts);
+        toast.success(`Showing all ${mockTranscripts.length} transcripts`);
       } else {
-        setTranscripts([]);
-        toast.info("No transcripts found for this number");
+        // Filter transcripts by phone number
+        const filtered = mockTranscripts.filter(transcript => 
+          transcript.phoneNumber.includes(phoneNumber)
+        );
+        
+        if (filtered.length > 0) {
+          setFilteredTranscripts(filtered);
+          toast.success(`Found ${filtered.length} transcripts`);
+        } else {
+          setFilteredTranscripts([]);
+          toast.info("No transcripts found for this number");
+        }
       }
       setIsLoading(false);
-    }, 1500);
+    }, 1000);
   };
 
   return (
@@ -60,17 +86,17 @@ const Index: React.FC = () => {
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl font-bold mb-2">Call Transcripts</h1>
           <p className="text-app-medium-gray max-w-2xl mx-auto">
-            Enter a phone number to search for associated call transcripts. 
+            Browse all call transcripts or filter by phone number.
             Click on a transcript to expand and view the full content.
           </p>
         </div>
         
         <PhoneInput onSubmit={handleSubmit} />
         
-        <TranscriptList transcripts={transcripts} isLoading={isLoading} />
+        <TranscriptList transcripts={filteredTranscripts} isLoading={isLoading} />
         
         <div className="mt-12 text-center text-sm text-app-medium-gray animate-fade-in">
-          <p>Try searching for a number containing "555" to see sample transcripts</p>
+          <p>Try filtering with numbers like "415", "650", or "510"</p>
         </div>
       </div>
     </div>
