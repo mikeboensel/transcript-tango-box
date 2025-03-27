@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PlaceCall from "../components/PlaceCall";
-import PhoneInput from "../components/PhoneInput";
+import TranscriptFilter from "../components/TranscriptFilter";
 import TranscriptList from "../components/TranscriptList";
 import { Transcript } from "../components/TranscriptItem";
 import { toast } from "sonner";
@@ -105,7 +105,7 @@ const Index: React.FC = () => {
           </p>
         </div>
 
-        <PhoneInput onSubmit={handleSubmit} />
+        <TranscriptFilter onSubmit={handleSubmit} />
 
         <TranscriptList
           transcripts={filteredTranscripts}
