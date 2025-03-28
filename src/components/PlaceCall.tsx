@@ -24,16 +24,36 @@ const PlaceCall: React.FC = () => {
       return;
     }
     
-    setIsCallInProgress(true);
+    // TODO: Must track whether calling is available or not.
+
+    // setIsCallInProgress(true);
     
     // Simulate call in progress
     toast.success(`Calling ${phoneNumber}...`);
+
+    fetch('http://restless-advance/outbound-call', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        first_message: 'Hi, I am calling from the Gates Foundation. Do you have a minute to answer some questions about public health?',
+        number: phoneNumber,
+      }),
+    })
+      .then((response) => response.json())
+      .catch((error) => {
+        setIsCallInProgress(false);
+        toast.error(`Error placing call to ${phoneNumber}`);
+      });
+    
+
     
     // Simulate call completion after delay
-    setTimeout(() => {
-      setIsCallInProgress(false);
-      toast.success(`Call to ${phoneNumber} completed`);
-    }, 3000);
+    // setTimeout(() => {
+    //   setIsCallInProgress(false);
+    //   toast.success(`Call to ${phoneNumber} completed`);
+    // }, 3000);
   };
 
   return (
