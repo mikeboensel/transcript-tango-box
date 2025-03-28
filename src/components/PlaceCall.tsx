@@ -31,7 +31,7 @@ const PlaceCall: React.FC = () => {
     // Simulate call in progress
     toast.success(`Calling ${phoneNumber}...`);
 
-    fetch('http://restless-advance/outbound-call', {
+    fetch('http://restless-advance.com/outbound-call', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
